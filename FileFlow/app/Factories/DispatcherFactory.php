@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Factories;
+
+use App\Estrategies\MessageDispatcherInterface;
+use App\Services\Dispatchers\LaravelJobDispatcher;
+use App\Services\Dispatchers\RabbitMQDispatcher;
+
+class DispatcherFactory
+{
+    public static function make(): MessageDispatcherInterface
+    {
+        $type = config('queue.dispatcher', 'laravel');
+
+        return match ($type) {
+            'rabbitmq' => new RabbitMQDispatcher(),
+            default => new LaravelJobDispatcher(),
+        };
+    }
+}
