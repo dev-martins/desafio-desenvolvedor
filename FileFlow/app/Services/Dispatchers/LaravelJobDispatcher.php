@@ -6,7 +6,7 @@ use App\Estrategies\MessageDispatcherInterface;
 
 class LaravelJobDispatcher implements MessageDispatcherInterface
 {
-    public function dispatch(string $jobClass, array $payload): void
+    public function dispatch(array $payload, string $jobClass = null): void
     {
         dispatch(new $jobClass(...$payload));
     }

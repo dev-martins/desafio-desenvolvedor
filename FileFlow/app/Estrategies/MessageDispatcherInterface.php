@@ -4,5 +4,5 @@ namespace App\Estrategies;
 
 interface MessageDispatcherInterface
 {
-    public function dispatch(string $jobClass, array $payload): void;
+    public function dispatch(array $payload, string $jobClass = null): void;
 }

@@ -13,7 +13,14 @@ class DispatcherFactory
         $type = config('queue.dispatcher', 'laravel');
 
         return match ($type) {
-            'rabbitmq' => new RabbitMQDispatcher(),
+            'rabbitmq' => new RabbitMQDispatcher(
+                env('RABBITMQ_HOST'),
+                env('RABBITMQ_PORT'),
+                env('RABBITMQ_USER'),
+                env('RABBITMQ_PASSWORD'),
+                env('VHOST'),
+                env('RABBITMQ_QUEUE')
+            ),
             default => new LaravelJobDispatcher(),
         };
     }
