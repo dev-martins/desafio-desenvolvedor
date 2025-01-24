@@ -1,52 +1,50 @@
-<p>
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQIAOtqQ5is5vwbcEn0ZahZfMxz1QIeAYtFfnLdkCXu1sqAGbnX" width="300">
- </p>
- 
-### A Oliveira Trust:
-A Oliveira Trust é uma das maiores empresas do setor Financeiro com muito orgulho, desde 1991, realizamos as maiores transações do mercado de Títulos e Valores Mobiliários.
+# FileFlow
 
-Somos uma empresa em que valorizamos o nosso colaborador em primeiro lugar, sempre! Alinhando isso com a nossa missão "Promover a satisfação dos nossos clientes e o desenvolvimento pessoal e profissional da nossa equipe", estamos construindo times excepcionais em Tecnologia, Comercial, Engenharia de Software, Produto, Financeiro, Jurídico e Data Science.
+## Design Pattern Implementados
 
-Estamos buscando uma pessoa que seja movida a desafios, que saiba trabalhar em equipe e queira revolucionar o mercado financeiro!
+ 1. Service
+ 2. Repository
+ 3. Strategy
+ 4. Specification
+ 5. Factory
 
-Front-end? Back-end? Full Stack? Analista de dados? Queremos conhecer gente boa, que goste de colocar a mão na massa, seja responsável e queira fazer história!
+## Funcionalidades
 
-#### O que você precisa saber para entrar no nosso time: 🚀
-- Trabalhar com frameworks (Laravel, Lumen, Yii, Cake, Symfony ou outros...)
-- Banco de dados relacional (MySql, MariaDB)
-- Trabalhar com microsserviços
+ 1. Upload de csv/excel e armazenamento no banco de dados
+ 2. Armazenamento em fila para processamento posterior
+ 3. Buscar pela arquivo
+ 4. Filtrar conteúdo do arquivo
+ 5. Registro de usuários
+ 6. Login com autenticação de dois fatores (2FA)
 
-#### O que seria legal você saber também: 🚀
-- Conhecimento em banco de dados não relacional;
-- Conhecimento em docker;
-- Conhecimento nos serviços da AWS (RDS, DynamoDB, DocumentDB, Elasticsearch);
-- Conhecimento em metodologias ágeis (Scrum/Kanban);
+## Serviços Externos
 
-#### Ao entrar nessa jornada com o nosso time, você vai: 🚀
-- Trabalhar em uma equipe de tecnologia, em um ambiente leve e descontraído e vivenciar a experiência de mudar o mercado financeiro;
-- Dress code da forma que você se sentir mais confortável;
-- Flexibilidade para home office e horários;
-- Acesso a cursos patrocinados pela empresa;
+ 1. [MailTrap](https://mailtrap.io/): para envio do código de login
+ 2. [CloudAMQP](https://www.cloudamqp.com): para filas RabbitMQ
+ 3. [Ngrok](https://download.ngrok.com/downloads/windows): para criar um tunel para conexão do CloudAMQP com a aplicação localmente
+ 4. [Postman](https://documenter.getpostman.com/view/7646530/2sAYQfDpWk): para testar e documentar endpoints
 
-#### Benefícios 🚀
-- Salário compatível com o mercado;
-- Vale Refeição (CAJU);
-- Vale Alimentação (CAJU);
-- Vale Transporte ou Vale Combustível (CAJU);
-- Plano de Saúde e Odontológico;
-- Seguro de vida;
-- PLR Semestral;
-- Horário Flexível;
-- Parcerias em farmácias
+## Como Iniciar a Aplicação e Testar
 
-#### Local: 🚀
-Barra da Tijuca, Rio de Janeiro, RJ
+### Usando docker
 
-#### Conheça mais sobre nós! :sunglasses:
-- Website (https://www.oliveiratrust.com.br/)
-- LinkedIn (https://www.linkedin.com/company/oliveiratrust/)
+ 1. Ter o Docker instalado
+ 2. Ter Mysql instalado
+ 3. No .env na conexão com banco: `DB_HOST=host.docker.internal`
+ 4. Na raiz do projeto rodar: `docker-compose up -d --build`
 
-A Oliveira Trust acredita na inclusão e na promoção da diversidade em todas as suas formas. Temos como valores o respeito e valorização das pessoas e combatemos qualquer tipo de discriminação. Incentivamos a todos que se identifiquem com o perfil e requisitos das vagas disponíveis que candidatem, sem qualquer distinção.
 
-## Pronto para o desafio? 🚀🚀🚀🚀
-https://github.com/Oliveira-Trust/desafio-desenvolvedor/blob/master/vaga3.md
+### Usando Servidor do próprio Laravel
+
+ 1. Ter PHP 8.3 instalado
+ 2. ter a extensão sockets habilitada
+ 3. No .env na conexão com banco: `DB_HOST=127.0.0.1`
+ 4. Na raiz do Projeto rodar: `php artisan serve --port=8001`
+
+### Tanto no Docker quanto no Laravel 
+
+ 1. Ter o Ngrok instalado e rodar: `ngrok http 8001`
+ 2. Ter uma conta configurada no CloudAMQP
+ 3. Configurar o smtp
+ 4. Rodar o comando: `php artisan queue:work`
+
