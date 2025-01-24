@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\RabbitMQController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,15 +18,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/verify/otp', [AuthController::class, 'verifyOTP']);
+});
+
+Route::prefix('users')->group(function () {
+    Route::post('', [UsersController::class, "register"]);
+    Route::get('', [UsersController::class, "users"]);
+});
+
 Route::post('/webhook/rabbitmq/process/file', [RabbitMQController::class, 'fileProcess']);
 
-// Route::middleware('auth:api')->group(function () {
-Route::prefix('uploads')->group(function () {
-    Route::get('', [UploadController::class, 'history']);
-    Route::post('', [UploadController::class, 'upload']);
-});
+Route::middleware('auth:api')->group(function () {
+    Route::prefix('uploads')->group(function () {
+        Route::get('', [UploadController::class, 'history']);
+        Route::post('', [UploadController::class, 'upload']);
+    });
 
-Route::prefix('files')->group(function () {
-    Route::get('', [ContentController::class, 'contentFile']);
+    Route::prefix('files')->group(function () {
+        Route::get('', [ContentController::class, 'contentFile']);
+    });
 });
-// });
