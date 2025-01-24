@@ -1,0 +1,23 @@
+services:
+  app:
+    build:
+      args:
+        user: developer
+        uid: 1000
+      context: ./
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: fileflow
+    container_name: fileflow-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - fileflow-network
+    ports:
+      - "8001:80"
+
+networks:
+  fileflow-network:
+    driver: bridge
