@@ -18,12 +18,12 @@ class FileContentImport implements
     WithChunkReading
 {
     protected $uploadId;
-    protected $file;
+    protected $filePath;
 
     public function __construct(array $data)
     {
-        $this->uploadId = $data['uploadId'];
-        $this->file = $data['filePath'];
+        $this->uploadId = $data['data']['uploadId'];
+        $this->filePath = $data['data']['filePath'];
         $this->storeWorksheet();
     }
 
@@ -31,7 +31,7 @@ class FileContentImport implements
     {
         Excel::import(
             $this,
-            base_path('storage/app/' . $this->file)
+            base_path('storage/app/' . $this->filePath)
         );
     }
 
@@ -53,7 +53,6 @@ class FileContentImport implements
      */
     public function model(array $rows)
     {
-        // dd($rows);
         return new FileContent([
             'upload_id' => $this->uploadId,
             'RptDt' => $rows['rptdt'],
@@ -64,23 +63,6 @@ class FileContentImport implements
             'CrpnNm' => $rows['crpnnm'] ,
         ]);
     }
-
-    // /**
-    //  * Regras de validação para os dados processados.
-    //  *
-    //  * @return array
-    //  */
-    // public function rules(): array
-    // {
-    //     return [
-    //         'RptDt' => 'required|date',
-    //         'TckrSymb' => 'required|string',
-    //         'MktNm' => 'required|string',
-    //         'SctyCtgyNm' => 'required|string',
-    //         'ISIN' => 'required|string',
-    //         'CrpnNm' => 'required|string',
-    //     ];
-    // }
 
 
     public function batchSize(): int

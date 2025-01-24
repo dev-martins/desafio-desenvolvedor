@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\RabbitMQController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::post('/webhook/rabbitmq/process/file', [RabbitMQController::class, 'fileProcess']);
 
 // Route::middleware('auth:api')->group(function () {
 Route::prefix('uploads')->group(function () {

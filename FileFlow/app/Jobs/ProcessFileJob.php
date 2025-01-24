@@ -13,13 +13,11 @@ class ProcessFileJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $upload;
-    protected $filePath;
+    protected $data;
 
-    public function __construct($upload, $filePath)
+    public function __construct($data)
     {
-        $this->upload = $upload;
-        $this->filePath = $filePath;
+        $this->data = $data;
     }
 
     /**
@@ -27,11 +25,6 @@ class ProcessFileJob implements ShouldQueue
      */
     public function handle()
     {
-        $relativePath = str_replace(storage_path('app') . DIRECTORY_SEPARATOR, '', $this->filePath);
-        $data['uploadId'] = $this->upload->id;
-        $data['filePath'] = $relativePath;
-        // dd($relativePath);
-        // Processa o arquivo usando Excel::import com chunks
-        new FileContentImport($data);
+        new FileContentImport($this->data);
     }
 }
