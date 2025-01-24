@@ -90,4 +90,6 @@ return [
         'table' => 'failed_jobs',
     ],
 
+    'dispatcher' => env('QUEUE_DISPATCHER', 'laravel'),
+
 ];
