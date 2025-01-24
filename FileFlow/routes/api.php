@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,5 +16,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::middleware('auth:api')->group(function () {
-    Route::post('/uploads', [UploadController::class, 'upload']);
+Route::prefix('uploads')->group(function () {
+    Route::get('', [UploadController::class, 'history']);
+    Route::post('', [UploadController::class, 'upload']);
+});
+
+Route::prefix('files')->group(function () {
+    Route::get('', [ContentController::class, 'contentFile']);
+});
 // });

@@ -21,8 +21,15 @@ class UploadRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'file' => 'required|file|mimetypes:text/csv,text/plain',
-        ];
+        return match (true) {
+            $this->getMethod() == 'POST' => [
+                'file' => 'required|file|mimetypes:text/csv,text/plain',
+            ],
+            $this->getMethod() == 'GET' => [
+                'filename' => 'string|nullable',
+                'date' => 'date|nullable',
+            ],
+            default => []
+        };
     }
 }
